@@ -1,0 +1,24 @@
+@if (visible()) {
+  <article class="toast" [attr.data-type]="message().type" role="alert">
+    <div class="content">
+      <span class="icon" aria-hidden="true">
+        @switch (message().type) {
+          @case ('success') {
+            <ng-icon name="cssCheckO" />
+          }
+          @case ('error') {
+            <ng-icon name="cssInfo" />
+          }
+          @case ('info') {
+            <ng-icon name="cssInfo" />
+          }
+        }
+      </span>
+      <span class="text">{{ message().text }}</span>
+    </div>
+
+    <button type="button" class="close" (click)="dismiss()" aria-label="Close notification">
+      <ng-icon name="cssClose" />
+    </button>
+  </article>
+}

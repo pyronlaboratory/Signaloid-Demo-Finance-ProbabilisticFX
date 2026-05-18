@@ -1,0 +1,63 @@
+<div
+  class="currency-form card"
+  [formGroup]="store.form"
+  role="form"
+  aria-label="Currency Conversion Form"
+>
+  <div class="currency-selectors" role="group" aria-label="Currency Selection">
+    <div class="picker-wrapper">
+      <app-picker
+        label="From"
+        class="currency-picker"
+        [options]="currencyOptions"
+        [formControl]="store.sourceCurrency"
+      ></app-picker>
+    </div>
+
+    <div
+      class="exchange-switch"
+      (click)="exchange()"
+      aria-label="Swap source and target currencies"
+    >
+      <ng-icon name="cssArrowsExchange" size="1.5rem" aria-hidden="true"></ng-icon>
+    </div>
+
+    <div class="picker-wrapper">
+      <app-picker
+        label="To"
+        class="currency-picker"
+        [options]="currencyOptions"
+        [formControl]="store.targetCurrency"
+      ></app-picker>
+    </div>
+  </div>
+
+  @if (store.form.hasError('sameCurrency')) {
+    <span class="field-error same-currency-error" role="alert">
+      Source and target currencies must be different.
+    </span>
+  }
+
+  <div class="source-amount-wrapper">
+    <div class="source-amount">
+      <span class="currency-symbol" aria-hidden="true">{{ currencySymbol() }}</span>
+
+      <app-input
+        label="Amount"
+        placeholder="0.00"
+        inputMode="decimal"
+        [maxDecimalPlaces]="2"
+        [formControl]="store.amount"
+      ></app-input>
+    </div>
+
+    @if (store.amount.touched && store.amount.hasError('required')) {
+      <span class="field-error" role="alert">Amount is required.</span>
+    } @else if (
+      store.amount.touched &&
+      (store.amount.hasError('pattern') || store.amount.hasError('positiveNumber'))
+    ) {
+      <span class="field-error" role="alert">Enter a positive number.</span>
+    }
+  </div>
+</div>

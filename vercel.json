@@ -1,0 +1,15 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/signaloid/(.*)",
+      "destination": "/api/signaloid"
+    },
+    {
+      "source": "/((?!api).*)",
+      "destination": "/"
+    }
+  ],
+  "git": {
+    "deploymentEnabled": false
+  }
+}

@@ -1,0 +1,28 @@
+.stats-card {
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem 1.5rem;
+  background: var(--bg-card);
+  height: 76px;
+
+  .stats-label {
+    font-size: 0.7rem;
+    font-weight: var(--weight-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .stats-value {
+    font-size: 2rem;
+    font-weight: var(--weight-bold);
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    line-height: 1;
+    margin-top: auto;
+    margin-left: 0;
+  }
+}

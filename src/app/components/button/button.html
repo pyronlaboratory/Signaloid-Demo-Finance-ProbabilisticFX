@@ -1,0 +1,18 @@
+<button
+  [type]="type()"
+  [class.btn-primary]="variant() === 'primary'"
+  [class.btn-danger]="variant() === 'danger'"
+  [class.btn-outline]="variant() === 'outline'"
+  [class.is-loading]="isLoading()"
+  [disabled]="disabled() || isLoading()"
+  [attr.aria-busy]="isLoading()"
+  (click)="handleClick($event)"
+>
+  <span class="btn-content">
+    @if (isLoading()) {
+      <span class="spinner" aria-hidden="true"></span>
+      <span class="sr-only" aria-live="assertive">Processing request...</span>
+    }
+    <ng-content></ng-content>
+  </span>
+</button>

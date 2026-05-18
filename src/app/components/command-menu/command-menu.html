@@ -1,0 +1,31 @@
+@if (open()) {
+  <div class="command-menu" role="menu" (click)="$event.stopPropagation()">
+    @if (title()) {
+      <span class="menu-label">{{ title() }}</span>
+    }
+
+    @for (opt of options(); track opt.key) {
+      <div
+        class="menu-item"
+        role="menuitemcheckbox"
+        [attr.aria-checked]="opt.value"
+        (click)="toggle.emit(opt.key)"
+      >
+        <span>{{ opt.label }}</span>
+        <div class="toggle" [class.on]="opt.value"></div>
+      </div>
+    }
+
+    @if (actionLabel()) {
+      <div class="divider"></div>
+
+      <button class="action-btn" (click)="action.emit()">
+        @if (actionIcon()) {
+          <ng-icon [name]="actionIcon()!" size="1.2rem" />
+        }
+
+        {{ actionLabel() }}
+      </button>
+    }
+  </div>
+}

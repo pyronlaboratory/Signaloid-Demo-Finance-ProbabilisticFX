@@ -1,0 +1,62 @@
+<nav class="charts-tab" role="tablist" aria-label="Chart Views">
+  <div
+    class="tab-option"
+    role="tab"
+    [attr.aria-selected]="activeTab() === 'histogram'"
+    [class.active]="activeTab() === 'histogram'"
+    (click)="setTab('histogram')"
+  >
+    Histogram
+  </div>
+  <div
+    class="tab-option"
+    role="tab"
+    [attr.aria-selected]="activeTab() === 'bellcurve'"
+    [class.active]="activeTab() === 'bellcurve'"
+    (click)="setTab('bellcurve')"
+  >
+    Bell Curve
+  </div>
+</nav>
+
+<div class="charts-menu">
+  <div
+    class="menu-toggle"
+    (click)="toggleMenu($event)"
+    [attr.aria-expanded]="menuOpen()"
+    aria-haspopup="menu"
+    aria-label="Toggle Graph Options Menu"
+  >
+    <ng-icon name="cssMenuRightAlt" size="1.25rem" />
+  </div>
+
+  <app-command-menu
+    [open]="menuOpen()"
+    title="Graph options"
+    [options]="graphOptions()"
+    actionLabel="Export"
+    actionIcon="cssSoftwareDownload"
+    (toggle)="toggleOption($event)"
+    (action)="exportChart()"
+  />
+</div>
+
+<div class="charts" role="region" aria-label="Data Visualization">
+  @if (activeTab() === 'histogram') {
+    <div class="histogram-view">
+      <div
+        highchartsChart
+        [options]="histogramOptions()"
+        (chartInstance)="onChartInstance($event)"
+      ></div>
+    </div>
+  } @else {
+    <div class="bellcurve-view">
+      <div
+        highchartsChart
+        [options]="bellCurveOptions()"
+        (chartInstance)="onChartInstance($event)"
+      ></div>
+    </div>
+  }
+</div>

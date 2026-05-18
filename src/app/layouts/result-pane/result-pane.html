@@ -1,0 +1,41 @@
+<div class="result-container" role="region" aria-label="Conversion Analysis Results">
+  @if (error()) {
+    <div class="error" role="alert">
+      <img
+        src="/error_illustration.webp"
+        alt="Error Illustration"
+        class="error-image"
+        aria-hidden="true"
+      />
+      <h3>Pipeline Execution Failed</h3>
+      <p>{{ error() }}</p>
+
+      <app-button
+        variant="outline"
+        (btnClick)="refresh.emit()"
+        aria-label="Restart simulation and clear error state"
+      >
+        <span class="btn-text">Refresh</span>
+        <ng-icon name="cssRedo" class="fx-spin" size="1.25rem" aria-hidden="true" />
+      </app-button>
+    </div>
+  } @else if (!result()) {
+    <div class="loading" aria-live="polite">
+      <p>Calculating...</p>
+    </div>
+  } @else {
+    <div class="summary card" role="region" aria-label="Conversion Summary">
+      <app-result-summary [stats]="stats()!" />
+    </div>
+
+    <div class="content card" role="region" aria-label="Conversion Visualization">
+      <app-result-charts
+        [result]="result()!"
+        [stats]="stats()!"
+        [ticker]="ticker()"
+        (exportStatus)="onExportStatus($event)"
+      />
+      <app-toast [message]="toastMessage()" [duration]="10000" />
+    </div>
+  }
+</div>

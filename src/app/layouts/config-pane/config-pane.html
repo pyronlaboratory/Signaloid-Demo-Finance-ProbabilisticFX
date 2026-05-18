@@ -1,0 +1,29 @@
+<app-conversion-form />
+<app-variance-form />
+
+<div class="actions">
+  <app-button
+    variant="primary"
+    (btnClick)="convert.emit()"
+    [isLoading]="isLoading()"
+    [aria-label]="primaryAction().ariaLabel"
+    [scrollToTop]="true"
+  >
+    {{ primaryAction().text }}
+
+    @if (!isLoading() && !active()) {
+      <ng-icon name="cssArrowRight" class="fx-slide-right" size="1.25rem" aria-hidden="true" />
+    }
+  </app-button>
+
+  @if (active()) {
+    <app-button
+      variant="danger"
+      [disabled]="isLoading()"
+      (btnClick)="reset.emit()"
+      [scrollToTop]="true"
+    >
+      Reset
+    </app-button>
+  }
+</div>

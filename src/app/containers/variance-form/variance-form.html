@@ -1,0 +1,64 @@
+<div
+  class="variance-form card"
+  [formGroup]="store.form"
+  role="form"
+  aria-label="Distribution Rates Configuration"
+>
+  <details open>
+    <summary>
+      Distribution Rates
+      <svg class="summary-caret" width="10" height="10" viewBox="0 0 10 10">
+        <path d="M0 3l5 5 5-5z" fill="currentColor" />
+      </svg>
+    </summary>
+    <p class="form-hint">
+      Set the rate boundaries used to calculate conversion variance thresholds.
+    </p>
+
+    <div class="details-content">
+      <div class="rate-field">
+        <app-input
+          label="Min"
+          placeholder="1.0000"
+          inputMode="decimal"
+          [maxDecimalPlaces]="6"
+          [formControl]="store.minRate"
+        ></app-input>
+
+        @if (store.minRate.touched && store.minRate.hasError('required')) {
+          <span class="field-error" role="alert">Min rate is required.</span>
+        } @else if (
+          store.minRate.touched &&
+          (store.minRate.hasError('pattern') || store.minRate.hasError('positiveNumber'))
+        ) {
+          <span class="field-error" role="alert">Enter a positive rate.</span>
+        } @else if (
+          store.minRate.touched && store.maxRate.touched && store.form.hasError('rateRange')
+        ) {
+          <span class="field-error range-error" role="alert">
+            Min rate must be less than Max rate.
+          </span>
+        }
+      </div>
+
+      <div class="rate-field">
+        <app-input
+          label="Max"
+          placeholder="1.2500"
+          inputMode="decimal"
+          [maxDecimalPlaces]="6"
+          [formControl]="store.maxRate"
+        ></app-input>
+
+        @if (store.maxRate.touched && store.maxRate.hasError('required')) {
+          <span class="field-error" role="alert">Max rate is required.</span>
+        } @else if (
+          store.maxRate.touched &&
+          (store.maxRate.hasError('pattern') || store.maxRate.hasError('positiveNumber'))
+        ) {
+          <span class="field-error" role="alert">Enter a positive rate.</span>
+        }
+      </div>
+    </div>
+  </details>
+</div>

@@ -1,0 +1,8 @@
+@if (stats(); as s) {
+  <dl class="stats-grid" aria-label="Statistical Calculation Summary">
+    <app-stats-card label="Expected value" [value]="s.mean | number: '1.2-2'" />
+    <app-stats-card label="Minimum" [value]="s.min | number: '1.2-2'" />
+    <app-stats-card label="Maximum" [value]="s.max | number: '1.2-2'" />
+    <app-stats-card label="Std. deviation" [value]="s.std | number: '1.2-2'" />
+  </dl>
+}

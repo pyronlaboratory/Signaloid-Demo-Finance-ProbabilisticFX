@@ -1,0 +1,76 @@
+<div class="picker" [class.is-open]="isOpen()" [class.is-disabled]="disabled()">
+  @if (label()) {
+    <label class="picker-label" [id]="pickerId + '-label'">{{ label() }}</label>
+  }
+
+  <button
+    #triggerRef
+    type="button"
+    class="picker-trigger"
+    [disabled]="disabled()"
+    [attr.aria-expanded]="isOpen()"
+    [attr.aria-haspopup]="'listbox'"
+    [attr.aria-labelledby]="label() ? pickerId + '-label' : null"
+    (click)="toggle()"
+    (keydown)="onTriggerKeydown($event)"
+  >
+    @if (selected(); as current) {
+      <span class="picker-selected">
+        @if (current.imageUrl) {
+          <img class="option-image" [src]="current.imageUrl" [alt]="current.value" />
+        }
+        <span class="option-code">{{ current.value }}</span>
+      </span>
+    } @else {
+      <span class="picker-placeholder">Select...</span>
+    }
+    <svg class="picker-caret" width="10" height="10" viewBox="0 0 10 10">
+      <path d="M0 3l5 5 5-5z" fill="currentColor" />
+    </svg>
+  </button>
+
+  @if (isOpen()) {
+    <ul
+      #dropdownRef
+      class="picker-dropdown"
+      role="listbox"
+      [attr.aria-label]="label() || 'Options'"
+      [attr.aria-activedescendant]="
+        focusedIndex() >= 0 ? pickerId + '-opt-' + focusedIndex() : null
+      "
+      (keydown)="onDropdownKeydown($event)"
+      (mouseleave)="focusedIndex.set(-1)"
+      tabindex="-1"
+    >
+      @for (opt of options(); track opt.value; let i = $index) {
+        <li
+          [id]="pickerId + '-opt-' + i"
+          class="picker-option"
+          [class.is-selected]="opt.value === selectedValue()"
+          [class.is-focused]="focusedIndex() === i"
+          role="option"
+          [attr.aria-selected]="opt.value === selectedValue()"
+          (click)="select(opt)"
+          (mouseenter)="focusedIndex.set(i)"
+        >
+          @if (opt.imageUrl) {
+            <img class="option-image" [src]="opt.imageUrl" [alt]="opt.value" />
+          }
+          <span class="option-code">{{ opt.value }}</span>
+          <span class="option-name">{{ opt.label }}</span>
+          @if (opt.value === selectedValue()) {
+            <svg class="option-check" width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path
+                d="M3 7l3 3 5-6"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          }
+        </li>
+      }
+    </ul>
+  }
+</div>

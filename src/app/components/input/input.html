@@ -1,0 +1,17 @@
+<div class="input">
+  @if (label()) {
+    <label [for]="inputId">{{ label() }}</label>
+  }
+  <input
+    [id]="inputId"
+    type="text"
+    [attr.inputmode]="inputMode()"
+    [placeholder]="placeholder()"
+    [value]="value()"
+    [disabled]="disabled()"
+    (keydown)="handleKeyDown($event)"
+    (input)="onInput($event)"
+    (blur)="handleBlur($event)"
+    (wheel)="onWheel($event)"
+  />
+</div>
